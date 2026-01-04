@@ -1,10 +1,10 @@
 <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link  active" href="{{route('dashboard.index')}}">
+            <a class="nav-link  {{ $title === 'Dashboard' ? 'active' : '' }}" href="{{route('dashboard.index')}}">
                 <div
                     class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white"
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" 
                         class="bi bi-menu-app-fill" viewBox="0 0 16 16">
                         <path
                             d="M0 1.5A1.5 1.5 0 0 1 1.5 0h2A1.5 1.5 0 0 1 5 1.5v2A1.5 1.5 0 0 1 3.5 5h-2A1.5 1.5 0 0 1 0 3.5zM0 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm1 3v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2zm14-1V8a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2zM2 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5" />
@@ -97,13 +97,11 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link  " href="{{route('distributors.index')}}">
-                <div
+            <a class="nav-link  {{ $title === 'Distributor' ? 'active' : '' }}" href="{{route('distributors.index')}}">
+                <div    
                     class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#67748e"
-                        class="bi bi-heart-fill" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#67748e" viewBox="0 0 16 16">
+                        <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.56l1.416 1.7c.249.3.394.69.394 1.1V10.5a1.5 1.5 0 0 1-1.5 1.5h-.11a2.5 2.5 0 0 1-4.78 0H6.5a2.5 2.5 0 0 1-4.78 0H1.5A1.5 1.5 0 0 1 0 10.5v-7ZM4.5 13a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm7 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm2.5-7h-2v2.5h2.9l-.9-1.1c-.13-.16-.3-.24-.5-.24Z"/>
                     </svg>
                 </div>
                 <span class="nav-link-text ms-1">Distributor</span>
