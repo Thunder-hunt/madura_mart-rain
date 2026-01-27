@@ -144,8 +144,9 @@
                             <div class="row ms-3 me-3 mt-3">
                                 <div class="col-12">
                                     <div class="px-3 pb-3 text-end">
-                                        <a href="{{ route('distributors.index') }}"
-                                            class="btn bg-gradient-secondary me-5 cancelBtn">Cancel</a>
+                                        <a href="{{ route('distributors.index') }}" 
+   id="cancelBtn" 
+   class="btn bg-gradient-secondary me-5">Cancel</a>
                                         <button type="submit" id="simpan" class="btn bg-gradient-primary">Save New
                                             {{ $title }}
                                             Data</button>
@@ -199,30 +200,36 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    document.querySelector('.cancelBtn').addEventListener('click', function() {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: 'You will discard all changes!',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Yes, cancel it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Reset form and redirect or go back
-                document.getElementById('frm').reset();
-                Swal.fire({
-                    title: 'Cancelled',
-                    text: 'Form has been reset.',
-                    icon: 'success',
-                    timer: 1500
-                }).then(() => {
-                    window.history.back();
-                });
-            }
-        });
+    document.getElementById('cancelBtn').addEventListener('click', function(event) {
+    // 1. Stop the link from going to the URL immediately
+    event.preventDefault();
+    
+    // 2. Capture the URL from the href attribute
+    const url = this.getAttribute('href');
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'You will discard all changes!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, cancel it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Cancelled',
+                text: 'Form has been reset.',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false
+            }).then(() => {
+                // 3. Manually navigate to the URL
+                window.location.href = url;
+            });
+        }
     });
+});
 
     document.getElementById('simpan').addEventListener('click', function() {
         const name = document.getElementById('nama_distributor').value.trim();
