@@ -24,7 +24,9 @@ class DistributorController extends Controller
      */
     public function create()
     {
-        //
+        return view('distributor.create', data: [
+            'title' => 'Distributor',
+        ]);
     }
 
     /**
@@ -32,7 +34,13 @@ class DistributorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request-> validate([
+            'nama_distributor'=> 'required',
+            'alamat_distributor'=> 'required',
+            'notelepon_distributor'=> 'required'
+        ]);
+        Distributor::create($data);
+        return redirect('/distributor')->with('success', 'Distributor added successfully!');
     }
 
     /**

@@ -17,7 +17,7 @@
             <div class="input-group">
               <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
               <input type="text" class="form-control" placeholder="Type here...">
-            </div>
+            </div>  
           </div>
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
@@ -121,58 +121,40 @@
       </div>
     </nav>
     <!-- End Navbar -->
-    <div class="container-fluid py-4">
-      <a class="btn bg-gradient-dark mb-3" href="{{ route('distributors.create') }}"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add New Dustributor</a>
-      <div class="row">
-            <div class="col-12">
-                <div class="card mb-4">
-                    <div class="card-header pb-0">
-                        <h6>{{$title}} table</h6>
-                    </div>
-                    <div class="card-body px-0 pt-0 pb-2">
-                        <div class="table-responsive p-0">
-                            <table class="table align-items-center mb-0">
-                                <thead>
-                                    <tr>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            No.</th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Distribution Name</th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Address</th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Phone Number</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($data as $no => $data)
-                                    <tr>
-                                        <td class="text-xs font-weight-bold mb-8">
-                                            {{ $no + 1 }}.
-                                        </td>
-                                        <td class="text-xs font-weight-bold mb-8">
-                                            {{ $data->nama_distributor	 }}
-                                        </td>
-                                        <td class="text-xs font-weight-bold mb-8">
-                                            {{ $data->alamat_distributor }}
-                                        </td>
-                                        <td class="text-xs font-weight-bold mb-8">
-                                            {{ $data->notelepon_distributor }}
-                                        </td>
-                                    </tr>
-                                    @endforeach
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="container-fluid py-4" style="display: flex; justify-content: center; align-items: center">
+        <div class="card-body px-0 pt-0 pb-2"" style="width: 700px">
+                <form action="{{ route('distributors.store') }}" method="POST" id="frm">
+                            @csrf
+                            <div class="row ms-3 me-3 mt-3">
+                                <div class="col-12">
+                                    <div class="mb-3 px-3 pt-3">
+                                        <label for="nama_distributor" class="form-label">Nama Distributor</label>
+                                        <input type="text" class="form-control" id="nama_distributor" name="nama_distributor" placeholder="Enter Distributor Name">
+                                    </div>
+                                    <div class="mb-3 px-3 pt-3">
+                                        <label for="alamat_distributor" class="form-label">Alamat</label>
+                                        <textarea type="text" class="form-control" id="alamat_distributor" name="alamat_distributor" placeholder="Enter Address"></textarea>
+                                    </div>
+                                    <div class="mb-3 px-3 pt-3">
+                                        <label for="notelepon_distributor" class="form-label">No. Telp</label>
+                                        <input type="text" class="form-control" id="notelepon_distributor" name="notelepon_distributor" placeholder="Enter Phone Number">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row ms-3 me-3 mt-3">
+                                <div class="col-12">
+                                    <div class="px-3 pb-3 text-end">
+                                        <a href="{{ route('distributors.index') }}"
+                                            class="btn bg-gradient-secondary me-5 cancelBtn">Cancel</a>
+                                        <button type="submit" id="simpan" class="btn bg-gradient-primary">Save New
+                                            {{ $title }}
+                                            Data</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
         </div>
+    </div>
         <footer class="footer pt-3  ">
             <div class="container-fluid">
                 <div class="row align-items-center justify-content-lg-between">
@@ -213,3 +195,75 @@
         </footer>
     </div>
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.querySelector('.cancelBtn').addEventListener('click', function() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You will discard all changes!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, cancel it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Reset form and redirect or go back
+                document.getElementById('frm').reset();
+                Swal.fire({
+                    title: 'Cancelled',
+                    text: 'Form has been reset.',
+                    icon: 'success',
+                    timer: 1500
+                }).then(() => {
+                    window.history.back();
+                });
+            }
+        });
+    });
+
+    document.getElementById('simpan').addEventListener('click', function() {
+        const name = document.getElementById('nama_distributor').value.trim();
+        const address = document.getElementById('alamat_distributor').value.trim();
+        const phone = document.getElementById('notelepon_distributor').value.trim();
+
+        // Validation
+        if (!name || !address || !phone) {
+            Swal.fire({
+                title: 'Validation Error',
+                text: 'Please fill in all required fields!',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+
+        // Show confirmation dialog
+        Swal.fire({
+            title: 'Confirm Submission',
+            text: 'Are you sure you want to submit this distributor data?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, submit it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Here you would normally submit the form via AJAX or traditional submission
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Distributor has been created successfully!',
+                    icon: 'success',
+                    timer: 2000
+                }).then(() => {
+                    // Uncomment the line below when you have a backend endpoint ready
+                    // submitForm();
+                    window.history.back();
+                });
+            }
+        });
+    });
+</script>
+@endpush
